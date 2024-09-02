@@ -5,7 +5,7 @@ a = Analysis(
     ['create_exe.py'],
     pathex=[],
     binaries=[],
-    datas=[('ignore/final_video.mp4', '.'), ('ignore/hamas_communications.pcapng.ignore', '.')],
+    datas=[],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

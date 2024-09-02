@@ -19,7 +19,7 @@ def download_video(youtube_url, output_path="video.mp4"):
     return output_path
 
 # Function to extract audio from video
-def extract_audio(video_path, audio_output_path="audio.mp3"):
+def extract_audio(video_path, audio_output_path="hatikva.mp3"):
     try:
         video_clip = VideoFileClip(video_path)
         audio_clip = video_clip.audio
@@ -32,7 +32,7 @@ def extract_audio(video_path, audio_output_path="audio.mp3"):
 
 if __name__ == "__main__":
     # Example YouTube URL
-    youtube_url = "https://www.youtube.com/watch?v=oW1jQ-zh6zY"
+    youtube_url = "https://www.youtube.com/watch?v=QTk7FDRR8HI"
 
     # Download video
     video_file = download_video(youtube_url)

@@ -17,7 +17,7 @@ def check_password():
     user_input = entry.get()
     if user_input == correct_password:
         root.destroy()  # Close the pop-up
-        play_video()  # Play the video
+        #play_video()  # Play the video
     else:
         messagebox.showerror("Access Denied", "Incorrect password, intruder detected!")
 

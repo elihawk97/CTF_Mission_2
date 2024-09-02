@@ -23,7 +23,7 @@ def receive_file(sock, file_size):
 def send_message(email):
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.settimeout(30)  # Set a timeout of 5 seconds
+            #s.settimeout(30)  # Set a timeout of 5 seconds
             s.connect((HOST, PORT))
             message = json.dumps({'email': email})
             s.sendall(message.encode('utf-8'))
