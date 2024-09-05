@@ -31,7 +31,88 @@ Are you ready to face the unknown and bring a dangerous adversary to justice? Th
 * At certain points there will be a pop up box asking for a "secret code" (or something of that sort), input the information you found, if it doesn't work check spelling or maybe you're missing something.
 
 # Development
+### Development Process of the CTF
 
+#### Concept and Storyline
+The CTF was designed to provide participants with an engaging storyline, inspired by real-world espionage themes. The primary focus was to build a challenge that integrated multiple skills such as database exploitation, packet capture analysis, cryptographic decryption, and DNS querying. The storyline revolved around tracking down a Hamas operative using a combination of technical forensics and intelligence gathering, placing participants in the role of agents on a mission.
+
+The narrative helped tie the stages together cohesively. I spent time researching historical events to include realistic elements, such as referencing Darwish's predecessor and using coordinates in Islamabad, Pakistan as the final location. The challenge is designed to simulate a covert intelligence mission that requires skillful extraction of hidden data.
+
+### **How I Created My Spy-Themed Video**
+
+1. **Concept and Design**:
+   - I wanted to create a spy-themed video that had an intense, secretive feel, kind of like what you'd see in a Mossad or espionage setting. I decided to include a Star of David as the central symbol to represent Israel and build the theme around that with flickering effects and a high-tech vibe.
+
+2. **Image Creation**:
+   - I generated a custom spy-themed icon featuring a Star of David at the center. The design had a sleek, modern look with a green and red background to fit the intense, espionage atmosphere I was going for. I made sure it didn’t have any unsettling elements, keeping the focus on the spy theme.
+
+3. **Text Animation**:
+   - For the mission briefing part, I used Python's **MoviePy** library to create an effect where the text appeared slowly fading into the screen. I used a typewriter-style font (Courier-New) to add that extra spy feel, making the text unfold slowly, building suspense.
+
+4. **Background Music**:
+   - To enhance the overall atmosphere, I downloaded a digital, spy-themed track to play in the background. It had a suspenseful and high-tech sound that matched the visuals perfectly.
+
+5. **Video Assembly**:
+   - I combined the flickering Star of David image, the animated mission briefing text, and the background music in the final video. Using Python and MoviePy, I ensured everything was timed correctly and flowed seamlessly.
+
+---
+
+This process allowed me to create a cohesive spy-themed video, combining visuals, sound, and text to create a suspenseful, engaging presentation.
+
+#### Code and Implementation
+The project was built using Python and SQLite. Python was chosen due to its versatility and the availability of powerful libraries for network analysis, encryption, and database management. For packet analysis, I used **Scapy** to reconstruct data streams from PCAP files, and **SQLite** was used to simulate a vulnerable database that participants needed to query.
+
+The CTF also involved custom-built executables. One of the challenges was designing the **database executable**, which allowed users to enter SQL commands. I used Python’s **sqlite3** library to connect to the SQLite database and return queries based on user input. This aspect required careful planning to ensure that the hints provided in the video (for example, port numbers or email addresses) were meaningful but not too easy to guess.
+
+For network communications, the server-client architecture involved sending files over a socket connection. This stage required handling different types of data (like encrypted messages and audio files) over the wire and then analyzing these using packet capture tools like **Wireshark**.
+
+#### Challenges
+1. **Data Reconstruction from PCAP Files**: 
+   One of the more technical challenges was reconstructing a TCP stream from a PCAP file. The packets were out of order, which required developing logic to piece them back together while accounting for sequence numbers. Using Scapy for packet inspection, I had to iterate over the packets and ensure data integrity while reassembling the file.
+
+2. **Encrypted Audio File Handling**:
+   Handling audio files over TCP was another challenge. Once captured, the audio file was XOR-encrypted, which added complexity to its reconstruction. Ensuring that participants received clear instructions to work through the spaces between characters when decrypting the message required thoughtful hint design.
+
+3. **DNS and Network Capture**: 
+   A significant part of the challenge involved understanding how DNS servers operate and simulating DNS responses in a controlled environment. Integrating this aspect into the storyline (about fundraising via DNS queries) and ensuring the right level of difficulty required a deep understanding of DNS queries and packet inspection in Wireshark.
+
+4. **Time-Sensitive Execution**: 
+   Timing was also a factor, especially with server interactions, where I had to make sure that errors were meaningful but subtle enough to push participants in the right direction without giving away too much. The server had to send data at specific intervals to ensure the agents (players) had multiple opportunities to capture the PCAP file.
+
+5. **Client-Server Communication**:
+   Building a client-server architecture that seamlessly handled errors, hints, and communications was difficult. I had to ensure that multiple rounds of communication could happen, especially when participants missed the file transfer in the first attempt. This required handling socket errors gracefully and providing meaningful feedback to participants.
+
+#### Technologies and Skills
+- **Programming Languages**: Python (main language), SQL (database queries)
+- **Python Libraries**: 
+   - **sqlite3** for database interactions
+   - **Scapy** for packet capture and TCP stream reconstruction
+   - **socket** for server-client communication
+   - **os**, **sys** for system-level interactions
+   - **tkinter** for the GUI interface
+- **Skills Required**: 
+   - SQL database exploitation
+   - Packet analysis using Wireshark
+   - Python scripting (including socket programming and packet reconstruction)
+   - Cryptographic decryption (symmetric XOR encryption)
+   - Network protocols (HTTP, TCP/IP, DNS)
+
+#### Files Involved
+- **[client.py](client.py)**: The Python script to connect to the server and retrieve the PCAP file, as well as code to extract TCP data from a PCAP file and reconstruct the original message.
+- **[server.py](server.py)**: The server-side script that sends encrypted files based on the player's input.
+- **[msg_encrypt.py](msg_encrypt.py)**: This file contains the logic to encrypt the message hidden in the audio using XOR encryption.
+- **[msg_decrypt.py](msg_decrypt.py)**: This file contains the logic to decrypt the message in the reconstructed audio using XOR encryption.
+- **audio_encoder.py**: Code to add in the encrypted message into the audio file.
+-**[dns_server2.py](dns_server2.py)**: Code to run the DNS server in the background of the agent's computer.
+-**[dns_client.py](dnsclient.py)**: Code to run query the DNS server in the background of the agent's computer so the packets will appear in their live wireshark capture.
+-**[http_server.py](http_server.py)**: Code to run the http server to send information about a website for the file capture the clients will recieve.
+-**[http_client.py](http_client.py)**: Code to connect to the server and receive the symmetric key from the http server which will show up in the wireshark capture.
+-**[rebuild_wav.py](rebuild_wav.py)**: File to rebuild the wav file sent over TCP in the wireshark capture.
+-**[movie.py](movie.py)**: File I used to create the intro video using the moveipy library.
+### Final Thoughts
+The development process required balancing technical difficulty and playability. One of the biggest challenges was ensuring the CTF was complex enough to challenge experienced players but still accessible to those with intermediate skills. Each stage had to provide enough guidance through hints without making the task trivial. Debugging the network communication and reconstructing audio files in Scapy was particularly challenging, but it also provided a rewarding experience when it worked seamlessly.
+
+The final product was built through iterative testing and refinement, especially with respect to making sure that packet captures were properly aligned with the server-client communications.
 
 # Solution:
 ## Stage 1
