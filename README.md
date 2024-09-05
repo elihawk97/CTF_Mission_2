@@ -30,6 +30,9 @@ Are you ready to face the unknown and bring a dangerous adversary to justice? Th
 * All information needed to solve the CTF is given to you either with the files and programs given to you or with hints at the beginning of the various stages. (Look around and you will find.)
 * At certain points there will be a pop up box asking for a "secret code" (or something of that sort), input the information you found, if it doesn't work check spelling or maybe you're missing something.
 
+# Development
+
+
 # Solution:
 ## Stage 1
 * After the video plays and the hint is given, the agent must run the database executable and exploit it to get the email address to connect to the server that began running in the background.
