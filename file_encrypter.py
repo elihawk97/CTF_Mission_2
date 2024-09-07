@@ -4,7 +4,7 @@ from cryptography.fernet import Fernet
 key = b'lQpxAKZNp4BBvBdIr6kCAGz3RjXtFTpLOpLPD5NlO_s='
 cipher = Fernet(key)
 
-files = ["server.py"]
+files = ["hamas_communications.pcapng"]
 # Encrypt the file
 for file in files:
     with open(file, "rb") as current:
