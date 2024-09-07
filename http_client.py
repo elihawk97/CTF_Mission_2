@@ -3,7 +3,7 @@ import requests
 def send_request():
     url = 'http://localhost:8080'
     # Hidden data to send in the request
-    hidden_data = "secret_key=HamasWar"
+    hidden_data = "secret_key=StrongerTogether"
     headers = {'Content-Type': 'application/encrypted.code.hamas.aza'}
 
     # Send a POST request with hidden data
