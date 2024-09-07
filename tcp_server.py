@@ -22,4 +22,4 @@ def send_audio_file(filename, host='localhost', port=5000):
    # server_socket.close()
 
 # Replace 'your_audio_file.wav' with the path to your actual audio file
-send_audio_file('combined_audio_secret.wav')
+send_audio_file('secret_message2.wav')
