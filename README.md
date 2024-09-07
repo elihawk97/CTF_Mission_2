@@ -94,21 +94,24 @@ For network communications, the server-client architecture involved sending file
    - SQL database exploitation
    - Packet analysis using Wireshark
    - Python scripting (including socket programming and packet reconstruction)
-   - Cryptographic decryption (symmetric XOR encryption)
+   - Cryptographic decryption (symmetric AES-256)
    - Network protocols (HTTP, TCP/IP, DNS)
 
 #### Files Involved
 - **[client.py](client.py)**: The Python script to connect to the server and retrieve the PCAP file, as well as code to extract TCP data from a PCAP file and reconstruct the original message.
-- **[server.py](server.py)**: The server-side script that sends encrypted files based on the player's input.
+- **[server.py](tcp_server.py)**: The server-side script that sends encrypted files based on the player's input.
+- **[tcp_client.py](tcp_client.py)**: The Python script to connect to the TCP server to receive the audio file for the wiresahrk capture.
+- **[tcp_server.py](server.py)**: The server-side script that sends the audio file for the wireshark capture.
 - **[msg_encrypt.py](msg_encrypt.py)**: This file contains the logic to encrypt the message hidden in the audio using XOR encryption.
 - **[msg_decrypt.py](msg_decrypt.py)**: This file contains the logic to decrypt the message in the reconstructed audio using XOR encryption.
 - **audio_encoder.py**: Code to add in the encrypted message into the audio file.
--**[dns_server2.py](dns_server2.py)**: Code to run the DNS server in the background of the agent's computer.
--**[dns_client.py](dnsclient.py)**: Code to run query the DNS server in the background of the agent's computer so the packets will appear in their live wireshark capture.
--**[http_server.py](http_server.py)**: Code to run the http server to send information about a website for the file capture the clients will recieve.
--**[http_client.py](http_client.py)**: Code to connect to the server and receive the symmetric key from the http server which will show up in the wireshark capture.
--**[rebuild_wav.py](rebuild_wav.py)**: File to rebuild the wav file sent over TCP in the wireshark capture.
--**[movie.py](movie.py)**: File I used to create the intro video using the moveipy library.
+- **[dns_server2.py](dns_server2.py)**: Code to run the DNS server in the background of the agent's computer.
+- **[dns_client.py](dnsclient.py)**: Code to run query the DNS server in the background of the agent's computer so the packets will appear in their live wireshark capture.
+- **[http_server.py](http_server.py)**: Code to run the http server to send information about a website for the file capture the clients will recieve.
+- **[http_client.py](http_client.py)**: Code to connect to the server and receive the symmetric key from the http server which will show up in the wireshark capture.
+- **[rebuild_wav.py](rebuild_wav.py)**: File to rebuild the wav file sent over TCP in the wireshark capture.
+- **[movie.py](movie.py)**: File I used to create the intro video using the moveipy library.
+- **[file_encrypter.py](file_encrypter.py)**: File to encrypt the pcap file to ensure the agent can only read it when he is up to it in the mission.
 ### Final Thoughts
 The development process required balancing technical difficulty and playability. One of the biggest challenges was ensuring the CTF was complex enough to challenge experienced players but still accessible to those with intermediate skills. Each stage had to provide enough guidance through hints without making the task trivial. Debugging the network communication and reconstructing audio files in Scapy was particularly challenging, but it also provided a rewarding experience when it worked seamlessly.
 
