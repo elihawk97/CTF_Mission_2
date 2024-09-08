@@ -157,18 +157,20 @@ def send_file(client_socket, file_path):
     print("File sent successfully.")
 def handle_client(client_socket):
     try:
-        while True:
+        flag = True
+        while flag:
             try:
+                client_socket.settimeout(10.0)  # 10 seconds timeout
                 data = client_socket.recv(1024).decode('utf-8')
                 if not data:
                     break
-
-                message = json.loads(data)
+                if '101' in data:
+                    flag = False
+                else:
+                    message = json.loads(data)
                 if 'email' in message:
                     if (message['email']).lower() == CORRECT_EMAIL:
                         send_file(client_socket, PCAP_FILE_PATH)
-                        show_hint_window(2)
-                        threading.Thread(target=start_password_check_window).start()
                         return  # Exit after sending file
                     else:
                         response = {'status': 'failure', 'message': 'Incorrect email address'}
@@ -188,6 +190,7 @@ def handle_client(client_socket):
         print(f"Error handling client: {str(e)}")
     finally:
         client_socket.close()
+        return flag
 
 def start_server():
     try:
@@ -195,12 +198,13 @@ def start_server():
             s.bind((HOST, PORT))
             s.listen()
             print(f"Server listening...")
-
-            while True:
+            flag = True
+            while flag:
                 try:
                     conn, addr = s.accept()
-                    print(f"Connected by {addr}")
-                    handle_client(conn)
+                    print(f"Connected by {addr}, once all data is received send code 101 to shutdown server"
+                          f"this will restrict access to intruders.")
+                    flag = handle_client(conn)
                 except Exception as e:
                     print(f"Error accepting connection: {str(e)}")
     except Exception as e:
@@ -224,7 +228,7 @@ def run_server_script(script_path):
 def show_hint_window(stage):
     hints = {
         1: "Proceed with caution. You have reached a point of no return.",
-        2: "You already know more than you think. Remember scapy and wireshark may add in unwanted spaces.",
+        2: "Update: Symmetric encryption expected. Also Watch out for An audio Voice recording.",
         3: "It is believed that Darwish has started a covert operation to fund a new Hamas operation through"
            "planting olive groves near Jewish towns in the Yehuda V'Shomron. They have gained access to DNS"
            "servers all over the world.",
@@ -368,7 +372,7 @@ def start_password_check_window():
     root.configure(bg="black")
 
     # Spy-themed label
-    label = tk.Label(root, text="Enter Secret Code:", font=("Courier", 14), fg="lime", bg="black")
+    label = tk.Label(root, text="Enter Coordinate:", font=("Courier", 14), fg="lime", bg="black")
     label.pack(pady=10)
 
     # Entry field for password
@@ -381,16 +385,7 @@ def start_password_check_window():
         if user_input == correct_password:
             #root.after(8000, root.destroy)
             root.destroy()  # Close the pop-up
-            time.sleep(10)
             messagebox._show("Access Granted", "Welcome, Mr. Darwish")
-
-            show_hint_window(3)
-            # Activate the DNS servers
-            threading.Thread(target=start_dns).start()
-            threading.Thread(target=start_dns_clients).start()
-            music_player()
-            show_hint_window(4)
-            threading.Thread(target=final_location).start()
 
             # Uncomment to play video after password is correct
             # play_video('final_video.mp4')
@@ -412,18 +407,32 @@ if __name__ == "__main__":
     # Path to the video file and server script
     video_file = "ignore/final_video.mp4"  # Replace with your actual video file
 
+
+     # Play the video
+    play_video(video_file)
+    time.sleep(2)
     # Start the server in a background thread
     server_thread = threading.Thread(target=start_server, args=())
     server_thread.start()
+    threading.Thread(target=show_hint_window(1)).start()
+    server_thread.join()
 
-    # Play the video
-    play_video(video_file)
-    time.sleep(65)
+    # Stage 2:
+    show_hint_window(2)
+    thread2 = threading.Thread(target=start_password_check_window)
+    thread2.start()
+    thread2.join()
 
-    show_hint_window(1)
 
+    # Stage 3 with DNS
+    show_hint_window(3)
+    # Activate the DNS servers
+    threading.Thread(target=start_dns).start()
+    threading.Thread(target=start_dns_clients).start()
+    music_player()
+    show_hint_window(4)
+    threading.Thread(target=final_location).start()
 
 
     # Wait for the server thread to finish (optional)
-    server_thread.join()
     #server2_thread.join()
