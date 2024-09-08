@@ -29,6 +29,7 @@ Are you ready to face the unknown and bring a dangerous adversary to justice? Th
 * Scapy
 ###
 * The "ignore" folder is not for your curious eyes, the files and information needed to solve the CTF will be given to you throughout the game as you need it.
+*  Don't directly open the db_mission.db file, that is only to be accessed through the query tool.
 * All information needed to solve the CTF is given to you either with the files and programs given to you or with hints at the beginning of the various stages. (Look around and you will find.)
 * At certain points there will be a pop up box asking for a "secret code" (or something of that sort), input the information you found, if it doesn't work check spelling or maybe you're missing something.
 
