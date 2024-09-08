@@ -51,6 +51,12 @@ def send_message(email):
         print(f"An unexpected error occurred: {str(e)}")
     return False
 
+def exit_program():
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect(('localhost', 10923))
+        s.send('101'.encode())
+
+
 def main():
     while True:
         try:
@@ -59,8 +65,8 @@ def main():
                 break
 
             if send_message(email):
-                break  # Exit if file was received successfully
-
+                exit_program()  # Exit if file was received successfully
+                break
         except KeyboardInterrupt:
             print("\nProgram interrupted. Exiting...")
             sys.exit(0)
