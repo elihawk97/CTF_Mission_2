@@ -9,6 +9,8 @@ This repository contains the tools you'll need to execute this high-stakes opera
 
 Are you ready to face the unknown and bring a dangerous adversary to justice? The future of national security depends on you. Move fast, Agent. The clock is ticking.
 
+## Download the [zip](CTF_Test.zip) file to begin
+
 ## prerequisites
 ### Python Environment
 * Python 3.10 is recommended, although 3.8 and on should work smoothly
