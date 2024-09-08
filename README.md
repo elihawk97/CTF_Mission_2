@@ -137,13 +137,13 @@ SELECT * FROM secret_info WHERE data LIKE '%@%';
 
 ## Stage 2
 * When you open the pcap file you will notice the http post request has in the content type hidden "application/encrypted.code.hamas.aza."
-* Check that out, and you will see that in the data section it says "Secret_key=HamasWar" this is the symmetric key
+* Check that out, and you will see that in the data section it says "Secret_key=StrongerTogether" this is the symmetric key
   ![image](https://github.com/user-attachments/assets/9c0664a7-6407-44d2-b453-bc1ec5b6a1a6)
 
 * Then you can will also see many TCP packets, you can click on the stream and see 185 packets were sent.
-* Notice in the video it hinted to the fact that they are sending audio file, here this is a wav audio file.
+* Notice in the video it hinted to the fact that they are sending audio file, here this is a wav audio file, which if you open it up in a text editor and search for the header you will find that it is a wav audio file.
 * Reconstruct it using scapy, the code to reconstruct it and get the encrypted message is [here](rebuild_wav.py)
-* You will see that it says:  S e c r e t   M e s s a g e   u s i n g   s y m m e t r i c   e n c r y p t i o n ,   T o p   S e c r e t ,   D o   N o t   S h a r e :  #-A.%& IwP[hR^ODfSGqY^V@fQD}U  however, there will be extra spaces in between each letter when reconstructed with scapy, this is given in a hint to remove those spaces.
+* You will be played a recording that reads allow the encrypted message: "o13iX_U1kMLzqVY-WgyyqB32Xmlss8l2FFoPuwZry7o8fmZSMbFFJHjmaPJOlzFgCMS93UURUkEbjZTeVk3hLw=="
 ```
 def reconstruct_file_from_pcap(pcap_file, output_file, host='localhost', port=5000):
     packets = rdpcap(pcap_file)
@@ -176,7 +176,7 @@ def reconstruct_file_from_pcap(pcap_file, output_file, host='localhost', port=50
 reconstruct_file_from_pcap('hamas_communications.pcapng', 'reconstructed_audio.wav')
 
 ```
-* The encryption is with a simple XOR symmetric encryption.
+* The encryption is with AES-256.
 * The code for decrypting is in [msg_decrypt.py](msg_decrypt.py)
 * The correct code for entering into the pop-up box is the Lattitude coordinate: 33.71259837310654
 
